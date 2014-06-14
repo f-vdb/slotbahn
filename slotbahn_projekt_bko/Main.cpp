@@ -30,27 +30,34 @@ const std::string FOR_FILENAME("for.txt");
 const std::string FHR_FILENAME("fhr.txt");
 const std::string AHR_FILENAME("ahr.txt");
 
+class Answer {
+private:
+	bool isRight_;
+	std::string answer_;
+public:
+	Answer(bool i, std::string a) :isRight_(i), answer_(a) {}
+	bool getIsAnswerRight() const { return isRight_; }
+	std::string getAnswer() const { return answer_; }
+
+};
+
 class Frage {
 public:
 	std::string frage_;
-	std::string richtigeAntwort_;
-	std::string falscheAntwortA_;
-	std::string falscheAntwortB_;
+	Answer answerA_;
+	Answer answerB_;
+	Answer answerC_;
 
-	Frage(std::string f, std::string r, std::string fA, std::string fB) :
-		frage_(f), richtigeAntwort_(r), falscheAntwortA_(fA), falscheAntwortB_(fB) { }
+
+	Frage(std::string f, std::string fA, std::string fB, std::string fC) :
+		frage_(f), answerA_(true, fA), answerB_(false, fB), answerC_(false, fC) { }
 
 	std::string getFrage() const { return frage_; }
-	std::string getRichtigeAntwort() const { return richtigeAntwort_; }
-	std::string getFalscheAntwortA() const { return falscheAntwortA_; }
-	std::string getFalscheAntwortB() const { return falscheAntwortB_; }
+	std::string getRichtigeAntwortA() const { return answerA_.getAnswer(); }
+	std::string getFalscheAntwortB() const { return answerB_.getAnswer(); }
+	std::string getFalscheAntwortC() const { return answerC_.getAnswer(); }
 
-	void printDebug() const {
-		std::cout << frage_ << " " << richtigeAntwort_ << " "
-		<< falscheAntwortA_ << " " << falscheAntwortB_ << "\n";
-	}
-
-
+	
 };
 
 enum State {START, HS, FOR, FHR, AHR, STOP};
@@ -61,8 +68,12 @@ std::vector<Frage> forAlleFragen;
 std::vector<Frage> fhrAlleFragen;
 std::vector<Frage> ahrAlleFragen;
 
-size_t getRandomNumber() {
+size_t getRandomNumberZeroToThree() {
 	return rand() % 3;  // zufallszahl zwischen 0 und 2 
+}
+
+size_t getRandomNumberZeroToA(int a) {
+	return rand() % a; // zufallszahl zwischen 0 und A-1
 }
 
 bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
@@ -98,20 +109,26 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 
 int main()
 {
+	srand(time(NULL));
+
 	State state = START;
 	RichtigOderFalsch richtigOderFalsch = NIX;
-
-	srand(time(NULL));
+	
 	if (!leseDateiInVector(HS_FILENAME, hsAlleFragen))
 		std::cout << "Fehler: konnte Datei " << HS_FILENAME << " nicht lesen.\n";
-	if(!leseDateiInVector(FOR_FILENAME, forAlleFragen))
+	if (!leseDateiInVector(FOR_FILENAME, forAlleFragen))
 		std::cout << "Fehler: konnte Datei " << FOR_FILENAME << " nicht lesen.\n";
-	if(!leseDateiInVector(FHR_FILENAME, fhrAlleFragen))
+	if (!leseDateiInVector(FHR_FILENAME, fhrAlleFragen))
 		std::cout << "Fehler: konnte Datei " << FHR_FILENAME << " nicht lesen.\n";
-	if(!leseDateiInVector(AHR_FILENAME, ahrAlleFragen))
+	if (!leseDateiInVector(AHR_FILENAME, ahrAlleFragen))
 		std::cout << "Fehler: konnte Datei " << AHR_FILENAME << " nicht lesen.\n";
-	
-	
+	/*
+	std::cout << hsAlleFragen[0].getRichtigeAntwortA() << "\n";
+	std::cout << hsAlleFragen[0].getFalscheAntwortB() << "\n";
+	std::cout << hsAlleFragen[0].answerA_.getAnswer() << "\n";
+	std::cout << hsAlleFragen[0].answerA_.getIsAnswerRight() << "\n";
+	*/
+
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Slotbahn - Projekt - Berufskolleg Opladen");
 	sf::Sprite logoSprite;
 	sf::Texture logoTexture;
