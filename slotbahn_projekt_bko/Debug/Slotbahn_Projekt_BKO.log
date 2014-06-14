@@ -1,15 +1,17 @@
-﻿Der Buildvorgang wurde am 14.06.2014 17:46:42 gestartet.
+﻿Der Buildvorgang wurde am 14.06.2014 18:47:58 gestartet.
      1>Projekt "C:\Users\base_system\Documents\Visual Studio 2013\Projects\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML\SFML-2.1\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(101): warning C4244: 'Argument': Konvertierung von 'time_t' in 'unsigned int', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(118): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(154): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(155): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(156): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(157): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
-     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(158): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(104): warning C4244: 'Argument': Konvertierung von 'time_t' in 'unsigned int', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(121): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(167): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(168): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(169): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(170): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(171): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(172): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
+     1>c:\users\base_system\documents\visual studio 2013\projects\slotbahn_projekt_bko\slotbahn_projekt_bko\main.cpp(173): warning C4244: 'Argument': Konvertierung von 'const size_t' in 'float', möglicher Datenverlust
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\Slotbahn_Projekt_BKO\Debug\Slotbahn_Projekt_BKO.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\Libs\Debug" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\Slotbahn_Projekt_BKO\Debug\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\Slotbahn_Projekt_BKO\Debug\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 Debug\Main.obj
          Slotbahn_Projekt_BKO.vcxproj -> C:\Users\base_system\Documents\Visual Studio 2013\Projects\Slotbahn_Projekt_BKO\Debug\Slotbahn_Projekt_BKO.exe
@@ -17,4 +19,4 @@
 
 Build erfolgreich.
 
-Verstrichene Zeit 00:00:02.92
+Verstrichene Zeit 00:00:03.43
