@@ -20,7 +20,7 @@
 
 const std::string BKO_LOGO("BKOLogo_80px.png");
 const size_t WIDTH = 1300;                  // Fensterbreite
-const size_t HEIGHT = 850;					// Fensterhöhe
+const size_t HEIGHT = 750;					// Fensterhöhe
 const size_t PIXEL_LOGO = 80;
 const size_t MARGIN_LOGO = 5;				// Abstand - Logo - Bildschirmrand
 const size_t MARGIN_TOP_QUESTION = 100;		// Abstand - Bildschirmrand oben - Fragentext
@@ -119,40 +119,75 @@ int main()
 	sf::Font font;
 	if (!font.loadFromFile("sansation.ttf"))
 		std::cout << "coud not load font...\n";
-	sf::Text text;
-	text.setFont(font);
-	std::string frage("Welche Farbe hat Blut?");
+	sf::Text frage;
+	sf::Text antwortA;
+	sf::Text antwortB;
+	sf::Text antwortC;
+	sf::Text state;
+
+	frage.setFont(font);
+	antwortA.setFont(font);
+	antwortB.setFont(font);
+	antwortC.setFont(font);
+	state.setFont(font);
+
+	std::string str("Welche Farbe hat Blut?");
 	std::vector<std::string> antworten{ "rot", "grün", "blau" };
 	
-	std::string s = frage;
+	std::string s = str;
 	s += "\n\n\n";
 	
 
+	frage.setColor(sf::Color::Blue);
+	frage.setCharacterSize(40);
+	//text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	antwortA.setColor(sf::Color::Blue);
+	antwortA.setCharacterSize(40);
+	antwortB.setColor(sf::Color::Blue);
+	antwortB.setCharacterSize(40);
+	antwortC.setColor(sf::Color::Blue);
+	antwortC.setCharacterSize(40);
+	state.setCharacterSize(40);
+	state.setColor(sf::Color::Green);
+
+	
+	state.setPosition(MARGIN_LOGO, MARGIN_LOGO);
+	frage.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION);
+	antwortA.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60);
+	antwortB.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60 + 60);
+	antwortC.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60 + 60 + 60);
+		
 	
 
-	text.setString(s);
-	text.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION);
-	text.setColor(sf::Color::Blue);
-	text.setCharacterSize(40);
-	//text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-
+	frage.setString(s);
+	antwortA.setString("A  grün");
+	antwortB.setString("B  rot");
+	antwortC.setString("C  blau");
+	state.setString("HS");
 
 	
 
 	while (window.isOpen())
 	{
+		
+
+		window.clear(sf::Color::White);
+		window.draw(logoSprite);
+		window.draw(state);
+		window.draw(frage);
+		window.draw(antwortA);
+		window.draw(antwortB);
+		window.draw(antwortC);
+
+	
+		window.display();
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-
-		window.clear(sf::Color::White);
-		window.draw(logoSprite);
-		window.draw(text);
-	
-		window.display();
 	}
 
 	return 0;
