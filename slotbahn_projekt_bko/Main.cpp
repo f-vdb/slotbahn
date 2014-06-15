@@ -20,9 +20,9 @@ const std::string BKO_LOGO("BKOLogo_80px.png");
 const size_t WIDTH = 1300;                  // Fensterbreite
 const size_t HEIGHT = 750;					// Fensterhoehe
 const size_t PIXEL_LOGO = 80;
-const size_t MARGIN_LOGO = 5;				// Abstand - Logo - Bildschirmrand
-const size_t MARGIN_TOP_QUESTION = 100;		// Abstand - Bildschirmrand oben - Fragentext
-const size_t MARGIN_LEFT_QUESTION = 50;		// Abstadn - Bildschirmrand lings - Fragentext
+const float MARGIN_LOGO = 5;				// Abstand - Logo - Bildschirmrand
+const float MARGIN_TOP_QUESTION = 100;		// Abstand - Bildschirmrand oben - Fragentext
+const float MARGIN_LEFT_QUESTION = 50;		// Abstadn - Bildschirmrand lings - Fragentext
 const size_t CHARACTER_SIZE = 40;           // Zeichengroesse 
 
 const std::string HS_FILENAME("hs.txt");
@@ -38,7 +38,6 @@ public:
 	Answer(bool i, std::string a) :isRight_(i), answer_(a) {}
 	bool getIsAnswerRight() const { return isRight_; }
 	std::string getAnswer() const { return answer_; }
-
 };
 
 class Frage {
@@ -48,7 +47,6 @@ public:
 	Answer answerB_;
 	Answer answerC_;
 
-
 	Frage(std::string f, std::string fA, std::string fB, std::string fC) :
 		frage_(f), answerA_(true, fA), answerB_(false, fB), answerC_(false, fC) { }
 
@@ -56,23 +54,24 @@ public:
 	std::string getRichtigeAntwortA() const { return answerA_.getAnswer(); }
 	std::string getFalscheAntwortB() const { return answerB_.getAnswer(); }
 	std::string getFalscheAntwortC() const { return answerC_.getAnswer(); }
-
-	
 };
 
-enum State {START, HS, FOR, FHR, AHR, STOP};
-enum RichtigOderFalsch {NIX ,RICHTIG, FALSCH};
+enum class State {START, HS, FOR, FHR, AHR, ENDE};    // Status fuer: Wo befinden wir uns
+enum class RichtigAntwort {START, A, B, C};					// Status fuer: Welche Antwort ist richtig
+enum class RichtigOderFalsch {START, RICHTIG, FALSCH};  
 
 std::vector<Frage> hsAlleFragen;
 std::vector<Frage> forAlleFragen;
 std::vector<Frage> fhrAlleFragen;
 std::vector<Frage> ahrAlleFragen;
 
-size_t getRandomNumberZeroToThree() {
+size_t getRandomNumberZeroToThree()
+{
 	return rand() % 3;  // zufallszahl zwischen 0 und 2 
 }
 
-size_t getRandomNumberZeroToA(int a) {
+size_t getRandomNumberZeroToA(int a) 
+{
 	return rand() % a; // zufallszahl zwischen 0 und A-1
 }
 
@@ -109,10 +108,10 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 
 int main()
 {
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(0)));
 
-	State state = START;
-	RichtigOderFalsch richtigOderFalsch = NIX;
+	State state = State::START;
+	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;
 	
 	if (!leseDateiInVector(HS_FILENAME, hsAlleFragen))
 		std::cout << "Fehler: konnte Datei " << HS_FILENAME << " nicht lesen.\n";
@@ -179,8 +178,6 @@ int main()
 	sfTextAuswertung.setColor(sf::Color::Magenta);
 	sfTextAuswertung.setCharacterSize(CHARACTER_SIZE);
 	
-
-	
 	sfTextStarttext.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION);
 	sfTextState.setPosition(MARGIN_LOGO, MARGIN_LOGO);
 	sfTextFrage.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION);
@@ -190,7 +187,6 @@ int main()
 	sfTextAuswertung.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60 + 60 + 60 + 60);
 		
 	sfTextStarttext.setString("Drücke Leertaste zum Starten oder zum Neustart");
-	sfTextState.setString("HS");
 	sfTextFrage.setString(s);
 	sfTextAntwortA.setString("A  grün");
 	sfTextAntwortB.setString("B  rot");
@@ -198,45 +194,73 @@ int main()
 	sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 	
 
-	
-
 	while (window.isOpen())
 	{
-		window.clear(sf::Color::White);
-
-		if (state == START)
+		if (state == State::START)
 		{
+			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			window.draw(sfTextStarttext);
+			window.display();
 
 		}
-		else if (state != START)
+		else if (state == State::HS)
 		{
+			window.clear(sf::Color::White);
 			window.draw(logoSprite);
+			sfTextState.setString("HS");
 			window.draw(sfTextState);
+
 			window.draw(sfTextFrage);
 			window.draw(sfTextAntwortA);
 			window.draw(sfTextAntwortB);
 			window.draw(sfTextAntwortC);
-			if (richtigOderFalsch == RICHTIG)
+			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
 			{
 				sfTextAuswertung.setColor(sf::Color::Green);
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
 			}
-			else if (richtigOderFalsch == FALSCH)
+			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
 			{
 				sfTextAuswertung.setColor(sf::Color::Red);
 				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
 				window.draw(sfTextAuswertung);
 			}
+			window.display();
 		}
-		
-
-		
-		
-		
-		
+		else if (state == State::FOR)
+		{
+			window.clear(sf::Color::White);
+			window.draw(logoSprite);
+			sfTextState.setString("FOR");
+			window.draw(sfTextState);
+			window.display();
+		}
+		else if (state == State::FHR)
+		{
+			window.clear(sf::Color::White);
+			window.draw(logoSprite);
+			sfTextState.setString("FHR");
+			window.draw(sfTextState);
+			window.display();
+		}
+		else if (state == State::AHR)
+		{
+			window.clear(sf::Color::White);
+			window.draw(logoSprite);
+			sfTextState.setString("AHR");
+			window.draw(sfTextState);
+			window.display();
+		}
+		else if (state == State::ENDE)
+		{
+			window.clear(sf::Color::White);
+			window.draw(logoSprite);
+			sfTextState.setString("Ende - geschafft - Neustart mit Space");
+			window.draw(sfTextState);
+			window.display();
+		}
 		
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -253,26 +277,46 @@ int main()
 					}
 					else if (event.key.code == sf::Keyboard::Space)
 					{
-						if (state == START)
+						if (state == State::START)
 						{
-							state = HS;
+							state = State::HS;
 						}
-						else if (state != START)
+						else if (state != State::START)
 						{
-							state = START;
+							state = State::START;
 						}
+					}
+					else if (event.key.code == sf::Keyboard::F)
+					{
+						if (state == State::HS)
+						{
+							state = State::FOR;
+						}
+						else if (state == State::FOR)
+						{
+							state = State::FHR;
+						}
+						else if (state == State::FHR)
+						{
+							state = State::AHR;
+						}		
+						else if (state == State::AHR)
+						{
+							state = State::ENDE;
+						}
+						
 					}
 					else if (event.key.code == sf::Keyboard::A)
 					{
-						richtigOderFalsch = FALSCH;
+						richtigOderFalsch = RichtigOderFalsch::FALSCH;
 					}
 					else if (event.key.code == sf::Keyboard::B)
 					{
-						richtigOderFalsch = RICHTIG;
+						richtigOderFalsch = RichtigOderFalsch::RICHTIG;
 					}
 					else if (event.key.code == sf::Keyboard::C)
 					{
-						richtigOderFalsch = FALSCH;
+						richtigOderFalsch = RichtigOderFalsch::FALSCH;
 					}
 					break;
 
@@ -281,7 +325,7 @@ int main()
 					break;
 
 			}
-			window.display();
+		
 
 		}
 	}
