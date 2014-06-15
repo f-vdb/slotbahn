@@ -56,9 +56,9 @@ public:
 	std::string getFalscheAntwortC() const { return answerC_.getAnswer(); }
 };
 
-enum class State {START, HS, FOR, FHR, AHR, ENDE};    // Status fuer: Wo befinden wir uns
-enum class RichtigAntwort {START, A, B, C};					// Status fuer: Welche Antwort ist richtig
-enum class RichtigOderFalsch {START, RICHTIG, FALSCH};  
+enum class State {START, HS, FOR, FHR, AHR, ENDE};		// Status fuer: Wo befinden wir uns
+enum class RichtigAntwort {START, A, B, C};				// Status fuer: Welche Antwort ist richtig
+enum class RichtigOderFalsch {START, RICHTIG, FALSCH};  // Status fuer: Richtig oder Falsch
 
 std::vector<Frage> hsAlleFragen;
 std::vector<Frage> forAlleFragen;
@@ -102,9 +102,6 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 	}
 	return true;
 }
-
-
-
 
 int main()
 {
@@ -155,7 +152,6 @@ int main()
 	sfTextAntwortC.setFont(font);
 	sfTextAuswertung.setFont(font);
 	
-
 	std::string str("Welche Farbe hat Blut?");
 	std::vector<std::string> antworten{ "rot", "grün", "blau" };
 	
@@ -193,7 +189,6 @@ int main()
 	sfTextAntwortC.setString("C  blau");
 	sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 	
-
 	while (window.isOpen())
 	{
 		if (state == State::START)
@@ -206,6 +201,20 @@ int main()
 		}
 		else if (state == State::HS)
 		{
+			// random zahl zwischn 0 und hsallefragen.size();
+			// std::string frage = methode klasse aus vector hsallefragen
+			// std::vector<Answer> vecAnswer;
+            // alle drei antworten an vecAnswer push_back
+			// random zahl zwischen 0 und vecAnswer.size()
+			// sfTextAntwortA
+			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::A
+			// lösche element in Vector vecAnswer
+			// random zahl zwischen 0 und vecAnswer.size()
+			// sfTextAnwortB
+			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::B
+			// lösche element in Vector vecAnswer
+			// letztes Element ist sfTextAntwortC
+			// richtigeAntwort == RichtigeAntwort::C
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("HS");
@@ -220,6 +229,8 @@ int main()
 				sfTextAuswertung.setColor(sf::Color::Green);
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
+				// state = State::FOR;  ??????????
+				// continue; ???????????
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
 			{
@@ -306,6 +317,8 @@ int main()
 						}
 						
 					}
+					// else if (richtigAntwort == RichtigAnwort::B) 
+					// {
 					else if (event.key.code == sf::Keyboard::A)
 					{
 						richtigOderFalsch = RichtigOderFalsch::FALSCH;
@@ -313,22 +326,24 @@ int main()
 					else if (event.key.code == sf::Keyboard::B)
 					{
 						richtigOderFalsch = RichtigOderFalsch::RICHTIG;
+						// signal
 					}
 					else if (event.key.code == sf::Keyboard::C)
 					{
 						richtigOderFalsch = RichtigOderFalsch::FALSCH;
 					}
+					//}
+					// else if (richtigAntwort == RichtigAntwort::A)
+					// {
+					// }
+					// ......
 					break;
 
 
 				default:
 					break;
-
 			}
-		
-
 		}
 	}
-
 	return 0;
 }
