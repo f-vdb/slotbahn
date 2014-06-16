@@ -1,0 +1,3 @@
+Wie viel ist 2+3*2?|8|10|9
+Wie heißt die längste Seite in einem rechtwinkligen Dreieck?|Hypothenuse|Gegenkathete|Ankathete
+In welchem Land findet 2014 die Fußballweltmeisterschaft statt?|Brasilien|Südamerika|Argentinien

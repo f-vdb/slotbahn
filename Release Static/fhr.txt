@@ -1,0 +1,3 @@
+f(x)=x² abgeleitet?|2x|x|2x + 1
+Wer gewann 2013 die Champions League?|Bayern München|Real Madrid|Manchester United
+Wie heißt unser Bundes Außenminister?|Franz Walter Steinmeier|Guido Westerwelle|Jürgen Tritin
