@@ -123,6 +123,7 @@ int main()
 		std::cout << "Fehler: konnte Datei " << AHR_FILENAME << " nicht lesen.\n";
 	
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Slotbahn - Projekt - Berufskolleg Opladen");
+	window.setKeyRepeatEnabled(false);  // damit wenn der Pneumatik-Stempel zu lange auf die Tasten haut nur ein Zeichen genommen wird
 	sf::Sprite logoSprite;
 	sf::Texture logoTexture;
 	if (!logoTexture.loadFromFile(BKO_LOGO))
@@ -185,78 +186,61 @@ int main()
 			window.display();
 
 		}
-		else if (state == State::HS)
+		else if (state == State::HS && neueFrage == NeueFrage::JA)
 		{
-			if (neueFrage == NeueFrage::JA)
+			size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
+			std::string frage = hsAlleFragen[rand].getFrage();
+			sfTextFrage.setString(frage);
+			std::vector<Answer> vecAnswer;
+			vecAnswer.push_back(hsAlleFragen[rand].answerA_);
+			vecAnswer.push_back(hsAlleFragen[rand].answerB_);
+			vecAnswer.push_back(hsAlleFragen[rand].answerC_);
+			size_t r = getRandomNumberZeroToA(vecAnswer.size());
+			std::string aA = "A  " + vecAnswer[r].getAnswer();
+			sfTextAntwortA.setString(aA);
+			if (vecAnswer[r].getIsAnswerRight())
 			{
-				//----------------
-				// random zahl zwischn 0 und hsallefragen.size();
-				size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
-				std::cout << rand << "\n";
-				// std::string frage = methode klasse aus vector hsallefragen
-				std::string frage = hsAlleFragen[rand].getFrage();
-				sfTextFrage.setString(frage);
-				// std::vector<Answer> vecAnswer;
-				// alle drei antworten an vecAnswer push_back
-				std::vector<Answer> vecAnswer;
-				vecAnswer.push_back(hsAlleFragen[rand].answerA_);
-				vecAnswer.push_back(hsAlleFragen[rand].answerB_);
-				vecAnswer.push_back(hsAlleFragen[rand].answerC_);
-				// random zahl zwischen 0 und vecAnswer.size()
-				size_t r = getRandomNumberZeroToA(vecAnswer.size());
-				// sfTextAntwortA
-				std::string aA = "A  " +  vecAnswer[r].getAnswer();
-				sfTextAntwortA.setString(aA);
-				// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::A
-				if (vecAnswer[r].getIsAnswerRight())
-				{
-					richtigeAntwortIst = RichtigeAntwortIst::A;
-				}
-				// lösche element in Vector vecAnswer
-				vecAnswer.erase(vecAnswer.begin() + r);
-				// random zahl zwischen 0 und vecAnswer.size()
-				r = getRandomNumberZeroToA(vecAnswer.size());
-				// sfTextAnwortB
-				std::string aB = "B  " + vecAnswer[r].getAnswer();
-				sfTextAntwortB.setString(aB);
-				// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::B
-				if (vecAnswer[r].getIsAnswerRight())
-				{
-					richtigeAntwortIst = RichtigeAntwortIst::B;
-				}
-				// lösche element in Vector vecAnswer
-				vecAnswer.erase(vecAnswer.begin() + r);
-				// letztes Element ist sfTextAntwortC
-				std::string aC = "C  " + vecAnswer[0].getAnswer();
-				sfTextAntwortC.setString(aC);
-				// richtigeAntwort == RichtigeAntwort::C
-				if (vecAnswer[0].getIsAnswerRight())
-				{
-					richtigeAntwortIst = RichtigeAntwortIst::C;
-				}
-				vecAnswer.erase(vecAnswer.begin());
-
-				window.clear(sf::Color::White);
-				window.draw(logoSprite);
-				sfTextState.setString("HS");
-				window.draw(sfTextState);
-
-				window.draw(sfTextFrage);
-				window.draw(sfTextAntwortA);
-				window.draw(sfTextAntwortB);
-				window.draw(sfTextAntwortC);
-
-				window.display();
-				neueFrage = NeueFrage::NEIN;
+				richtigeAntwortIst = RichtigeAntwortIst::A;
 			}
+			vecAnswer.erase(vecAnswer.begin() + r);
 			
+			r = getRandomNumberZeroToA(vecAnswer.size());
+			std::string aB = "B  " + vecAnswer[r].getAnswer();
+			sfTextAntwortB.setString(aB);
+			if (vecAnswer[r].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::B;
+			}
+			vecAnswer.erase(vecAnswer.begin() + r);
+			
+			std::string aC = "C  " + vecAnswer[0].getAnswer();
+			sfTextAntwortC.setString(aC);
+			if (vecAnswer[0].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::C;
+			}
+			vecAnswer.erase(vecAnswer.begin());
+
+			window.clear(sf::Color::White);
+			window.draw(logoSprite);
+			sfTextState.setString("HS");
+			window.draw(sfTextState);
+			window.draw(sfTextFrage);
+			window.draw(sfTextAntwortA);
+			window.draw(sfTextAntwortB);
+			window.draw(sfTextAntwortC);
+			window.display();
+			neueFrage = NeueFrage::NEIN;
+		}
+		else if (state == State::HS && neueFrage == NeueFrage::NEIN)
+		{
 			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
 			{
 				sfTextAuswertung.setColor(sf::Color::Green);
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
-
-				// state = State::FOR;  ??????????
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
 				// continue; ???????????
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
@@ -264,9 +248,10 @@ int main()
 				sfTextAuswertung.setColor(sf::Color::Red);
 				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
 				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
 			}
 			
-			//window.display();
 		}
 		else if (state == State::FOR)
 		{
@@ -299,6 +284,7 @@ int main()
 			sfTextState.setString("Ende - geschafft - Neustart mit Space");
 			window.draw(sfTextState);
 			window.display();
+			state = State::START;
 		}
 		
 		sf::Event event;
@@ -319,6 +305,7 @@ int main()
 						if (state == State::START)
 						{
 							state = State::HS;
+							neueFrage = NeueFrage::JA;
 						}
 						else if (state != State::START)
 						{
@@ -345,25 +332,51 @@ int main()
 						}
 						
 					}
-					// else if (richtigAntwort == RichtigAnwort::B) 
-					// {
-					else if (event.key.code == sf::Keyboard::A)
+					else if (richtigeAntwortIst == RichtigeAntwortIst::A)
 					{
-						richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						if (event.key.code == sf::Keyboard::A)
+						{
+							richtigOderFalsch = RichtigOderFalsch::RICHTIG;
+						}
+						else if (event.key.code == sf::Keyboard::B)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
+						else if (event.key.code == sf::Keyboard::C)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
 					}
-					else if (event.key.code == sf::Keyboard::B)
+					else if (richtigeAntwortIst == RichtigeAntwortIst::B) 
 					{
-						richtigOderFalsch = RichtigOderFalsch::RICHTIG;
-						// signal
+						if (event.key.code == sf::Keyboard::A)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
+						else if (event.key.code == sf::Keyboard::B)
+						{
+							richtigOderFalsch = RichtigOderFalsch::RICHTIG;
+						}
+						else if (event.key.code == sf::Keyboard::C)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
 					}
-					else if (event.key.code == sf::Keyboard::C)
+					else if (richtigeAntwortIst == RichtigeAntwortIst::C)
 					{
-						richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						if (event.key.code == sf::Keyboard::A)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
+						else if (event.key.code == sf::Keyboard::B)
+						{
+							richtigOderFalsch = RichtigOderFalsch::FALSCH;
+						}
+						else if (event.key.code == sf::Keyboard::C)
+						{
+							richtigOderFalsch = RichtigOderFalsch::RICHTIG;
+						}
 					}
-					//}
-					// else if (richtigAntwort == RichtigAntwort::A)
-					// {
-					// }
 					// ......
 					break;
 
