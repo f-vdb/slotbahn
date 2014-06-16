@@ -66,12 +66,12 @@ std::vector<Frage> forAlleFragen;
 std::vector<Frage> fhrAlleFragen;
 std::vector<Frage> ahrAlleFragen;
 
-size_t getRandomNumberZeroToThree()
+inline size_t getRandomNumberZeroToThree()
 {
 	return rand() % 3;  // zufallszahl zwischen 0 und 2 
 }
 
-size_t getRandomNumberZeroToA(int a) 
+inline size_t getRandomNumberZeroToA(int a) 
 {
 	return rand() % a; // zufallszahl zwischen 0 und A-1
 }
@@ -183,37 +183,32 @@ int main()
 			window.draw(logoSprite);
 			window.draw(sfTextStarttext);
 			window.display();
-
 		}
 		else if (state == State::HS && neueFrage == NeueFrage::JA)
 		{
 			size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
-			std::string frage = hsAlleFragen[rand].getFrage();
-			sfTextFrage.setString(frage);
+			sfTextFrage.setString(hsAlleFragen[rand].getFrage());
 			std::vector<Answer> vecAnswer;
 			vecAnswer.push_back(hsAlleFragen[rand].answerA_);
 			vecAnswer.push_back(hsAlleFragen[rand].answerB_);
 			vecAnswer.push_back(hsAlleFragen[rand].answerC_);
-			size_t r = getRandomNumberZeroToA(vecAnswer.size());
-			std::string aA = "A  " + vecAnswer[r].getAnswer();
-			sfTextAntwortA.setString(aA);
-			if (vecAnswer[r].getIsAnswerRight())
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortA.setString("A  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
 			{
 				richtigeAntwortIst = RichtigeAntwortIst::A;
 			}
-			vecAnswer.erase(vecAnswer.begin() + r);
+			vecAnswer.erase(vecAnswer.begin() + rand);
 			
-			r = getRandomNumberZeroToA(vecAnswer.size());
-			std::string aB = "B  " + vecAnswer[r].getAnswer();
-			sfTextAntwortB.setString(aB);
-			if (vecAnswer[r].getIsAnswerRight())
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortB.setString("B  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
 			{
 				richtigeAntwortIst = RichtigeAntwortIst::B;
 			}
-			vecAnswer.erase(vecAnswer.begin() + r);
+			vecAnswer.erase(vecAnswer.begin() + rand);
 			
-			std::string aC = "C  " + vecAnswer[0].getAnswer();
-			sfTextAntwortC.setString(aC);
+			sfTextAntwortC.setString("C  " + vecAnswer[0].getAnswer());
 			if (vecAnswer[0].getIsAnswerRight())
 			{
 				richtigeAntwortIst = RichtigeAntwortIst::C;
@@ -240,7 +235,6 @@ int main()
 				window.draw(sfTextAuswertung);
 				richtigOderFalsch = RichtigOderFalsch::START;
 				window.display();
-				// continue; ???????????
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
 			{
@@ -325,10 +319,8 @@ int main()
 						}		
 						else if (state == State::AHR)
 						{
-							std::cout << "in ahr -> state:end\n";
 							state = State::ENDE;
 						}
-						
 					}
 					else if (richtigeAntwortIst == RichtigeAntwortIst::A)
 					{
@@ -375,10 +367,7 @@ int main()
 							richtigOderFalsch = RichtigOderFalsch::RICHTIG;
 						}
 					}
-					// ......
 					break;
-
-
 				default:
 					break;
 			}
