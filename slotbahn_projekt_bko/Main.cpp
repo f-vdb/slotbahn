@@ -111,8 +111,7 @@ int main()
 	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;
 	RichtigeAntwortIst richtigeAntwortIst = RichtigeAntwortIst::START;
 	NeueFrage neueFrage = NeueFrage::JA;
-
-	
+		
 	if (!leseDateiInVector(HS_FILENAME, hsAlleFragen))
 		std::cout << "Fehler: konnte Datei " << HS_FILENAME << " nicht lesen.\n";
 	if (!leseDateiInVector(FOR_FILENAME, forAlleFragen))
@@ -251,7 +250,6 @@ int main()
 				richtigOderFalsch = RichtigOderFalsch::START;
 				window.display();
 			}
-			
 		}
 		else if (state == State::FOR)
 		{
@@ -278,15 +276,14 @@ int main()
 			window.display();
 		}
 		else if (state == State::ENDE)
-		{
+		{			
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("Ende - geschafft - Neustart mit Space");
 			window.draw(sfTextState);
 			window.display();
-			state = State::START;
 		}
-		
+		// Event-Loop
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -328,6 +325,7 @@ int main()
 						}		
 						else if (state == State::AHR)
 						{
+							std::cout << "in ahr -> state:end\n";
 							state = State::ENDE;
 						}
 						
