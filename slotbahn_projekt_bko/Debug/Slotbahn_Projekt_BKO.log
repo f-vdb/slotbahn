@@ -1,13 +1,14 @@
-﻿Der Buildvorgang wurde am 15.06.2014 18:36:16 gestartet.
-     1>Projekt "C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
+﻿Der Buildvorgang wurde am 16.06.2014 07:21:35 gestartet.
+     1>Projekt "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML\SFML-2.1\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\Libs\Debug" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Debug\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Debug\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 Debug\Main.obj
-         Slotbahn_Projekt_BKO.vcxproj -> C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe
-     1>Die Erstellung des Projekts "C:\Users\base_system\Documents\Visual Studio 2013\Projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" ist abgeschlossen, Build Ziel(e).
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\Libs\Debug" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 Debug\Main.obj
+         LINK : D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe wurde nicht gefunden oder beim letzten inkrementellen Linkvorgang nicht erstellt; vollständiger Link wird durchgeführt.
+         Slotbahn_Projekt_BKO.vcxproj -> D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe
+     1>Die Erstellung des Projekts "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" ist abgeschlossen, Build Ziel(e).
 
 Build erfolgreich.
 
-Verstrichene Zeit 00:00:02.01
+Verstrichene Zeit 00:00:14.33

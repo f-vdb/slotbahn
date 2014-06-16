@@ -1,0 +1,15 @@
+﻿Der Buildvorgang wurde am 16.06.2014 08:00:45 gestartet.
+     1>Projekt "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML\SFML-2.1\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D SFML_STATIC /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release Static\\" /Fd"Release Static\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\vdb\projects\slotbahn\Release Static\Slotbahn_Projekt_BKO.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\extlibs\libs-msvc\x86" /LIBPATH:"C:\SFML\SFML-2.1\Staitc Libs\Release" "sfml-graphics-s.lib" "sfml-window-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\vdb\projects\slotbahn\Release Static\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\vdb\projects\slotbahn\Release Static\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 /SAFESEH "Release Static\Main.obj"
+         Code wird generiert.
+         Codegenerierung ist abgeschlossen.
+         Slotbahn_Projekt_BKO.vcxproj -> D:\vdb\projects\slotbahn\Release Static\Slotbahn_Projekt_BKO.exe
+     1>Die Erstellung des Projekts "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" ist abgeschlossen, Build Ziel(e).
+
+Build erfolgreich.
+
+Verstrichene Zeit 00:00:01.55

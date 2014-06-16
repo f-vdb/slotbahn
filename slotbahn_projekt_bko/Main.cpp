@@ -57,7 +57,7 @@ public:
 };
 
 enum class State {START, HS, FOR, FHR, AHR, ENDE};		// Status fuer: Wo befinden wir uns
-enum class RichtigAntwort {START, A, B, C};				// Status fuer: Welche Antwort ist richtig
+enum class RichtigeAntwortIst {START, A, B, C};				// Status fuer: Welche Antwort ist richtig
 enum class RichtigOderFalsch {START, RICHTIG, FALSCH};  // Status fuer: Richtig oder Falsch
 
 std::vector<Frage> hsAlleFragen;
@@ -109,6 +109,7 @@ int main()
 
 	State state = State::START;
 	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;
+	RichtigeAntwortIst richtigeAntwortIst = RichtigeAntwortIst::START;
 	
 	if (!leseDateiInVector(HS_FILENAME, hsAlleFragen))
 		std::cout << "Fehler: konnte Datei " << HS_FILENAME << " nicht lesen.\n";
@@ -183,11 +184,13 @@ int main()
 	sfTextAuswertung.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60 + 60 + 60 + 60);
 		
 	sfTextStarttext.setString("Drücke Leertaste zum Starten oder zum Neustart");
+	/*
 	sfTextFrage.setString(s);
 	sfTextAntwortA.setString("A  grün");
 	sfTextAntwortB.setString("B  rot");
 	sfTextAntwortC.setString("C  blau");
 	sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
+	*/
 	
 	while (window.isOpen())
 	{
@@ -202,19 +205,51 @@ int main()
 		else if (state == State::HS)
 		{
 			// random zahl zwischn 0 und hsallefragen.size();
+			size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
+			std::cout << rand << "\n";
 			// std::string frage = methode klasse aus vector hsallefragen
+			std::string frage = hsAlleFragen[rand].getFrage();
+			sfTextFrage.setString(frage);
 			// std::vector<Answer> vecAnswer;
             // alle drei antworten an vecAnswer push_back
+			std::vector<Answer> vecAnswer;
+			vecAnswer.push_back(hsAlleFragen[rand].answerA_);
+			vecAnswer.push_back(hsAlleFragen[rand].answerB_);
+			vecAnswer.push_back(hsAlleFragen[rand].answerC_);
 			// random zahl zwischen 0 und vecAnswer.size()
+			size_t r = getRandomNumberZeroToA(vecAnswer.size());
 			// sfTextAntwortA
+			std::string aA = vecAnswer[r].getAnswer();
+			sfTextAntwortA.setString(aA);
 			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::A
+			if (vecAnswer[r].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::A;
+			}
 			// lösche element in Vector vecAnswer
+			vecAnswer.erase(vecAnswer.begin() + r);
 			// random zahl zwischen 0 und vecAnswer.size()
+			r = getRandomNumberZeroToA(vecAnswer.size());
 			// sfTextAnwortB
+			std::string aB = vecAnswer[r].getAnswer();
+			sfTextAntwortB.setString(aB);
 			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::B
+			if (vecAnswer[r].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::B;
+			}
 			// lösche element in Vector vecAnswer
+			vecAnswer.erase(vecAnswer.begin() + r);
 			// letztes Element ist sfTextAntwortC
+			std::string aC = vecAnswer[0].getAnswer();
+			sfTextAntwortC.setString(aC);
 			// richtigeAntwort == RichtigeAntwort::C
+			if (vecAnswer[0].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::C;
+			}
+			vecAnswer.erase(vecAnswer.begin());
+			
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("HS");

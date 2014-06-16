@@ -1,0 +1,31 @@
+#include <vector>
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+
+size_t getRandomNumberZeroToThree()
+{
+	return rand() % 3; // Zufallszahl zwischen 0 und 2
+}
+
+size_t getRandomNumberZeroToA(int a)
+{
+	return rand() % a; // Zufallszahl zwischen 0 und A-1
+}
+
+int main() {
+	srand(static_cast<unsigned int>(time(0)));
+	std::vector<int> iVec{ 1, 2, 3, 4, 5 };
+	std::cout << "iVec.size(): " << iVec.size() << "\n";
+	std::cout << "Zufallszahlen zwischen 0 und iVec.size()-1\n";
+	for (size_t i = 0; i != 10; ++i)
+		std::cout << getRandomNumberZeroToA(iVec.size()) << " ";
+
+	int random = 2;
+
+	iVec.erase(iVec.begin() + 1); // loesche zweites element
+
+	std::cout << "\nAusgabe Vector:\n";
+	for (auto i : iVec)
+		std::cout << i << " ";
+}
