@@ -56,9 +56,10 @@ public:
 	std::string getFalscheAntwortC() const { return answerC_.getAnswer(); }
 };
 
-enum class State {START, HS, FOR, FHR, AHR, ENDE};		// Status fuer: Wo befinden wir uns
-enum class RichtigeAntwortIst {START, A, B, C};				// Status fuer: Welche Antwort ist richtig
+enum class State {START, HS, FOR, FHR, AHR, ENDE};      // Status fuer: Wo befinden wir uns
+enum class RichtigeAntwortIst {START, A, B, C};         // Status fuer: Welche Antwort ist richtig
 enum class RichtigOderFalsch {START, RICHTIG, FALSCH};  // Status fuer: Richtig oder Falsch
+enum class NeueFrage {JA, NEIN};                        // Status fuer: Neue Frage Ja oder Nein-> warte auf KeyPressed
 
 std::vector<Frage> hsAlleFragen;
 std::vector<Frage> forAlleFragen;
@@ -106,10 +107,11 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 int main()
 {
 	srand(static_cast<unsigned int>(time(0)));
-
 	State state = State::START;
 	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;
 	RichtigeAntwortIst richtigeAntwortIst = RichtigeAntwortIst::START;
+	NeueFrage neueFrage = NeueFrage::JA;
+
 	
 	if (!leseDateiInVector(HS_FILENAME, hsAlleFragen))
 		std::cout << "Fehler: konnte Datei " << HS_FILENAME << " nicht lesen.\n";
@@ -119,13 +121,7 @@ int main()
 		std::cout << "Fehler: konnte Datei " << FHR_FILENAME << " nicht lesen.\n";
 	if (!leseDateiInVector(AHR_FILENAME, ahrAlleFragen))
 		std::cout << "Fehler: konnte Datei " << AHR_FILENAME << " nicht lesen.\n";
-	/*
-	std::cout << hsAlleFragen[0].getRichtigeAntwortA() << "\n";
-	std::cout << hsAlleFragen[0].getFalscheAntwortB() << "\n";
-	std::cout << hsAlleFragen[0].answerA_.getAnswer() << "\n";
-	std::cout << hsAlleFragen[0].answerA_.getIsAnswerRight() << "\n";
-	*/
-
+	
 	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Slotbahn - Projekt - Berufskolleg Opladen");
 	sf::Sprite logoSprite;
 	sf::Texture logoTexture;
@@ -153,12 +149,6 @@ int main()
 	sfTextAntwortC.setFont(font);
 	sfTextAuswertung.setFont(font);
 	
-	std::string str("Welche Farbe hat Blut?");
-	std::vector<std::string> antworten{ "rot", "grün", "blau" };
-	
-	std::string s = str;
-	s += "\n\n\n";
-	
 	sfTextStarttext.setCharacterSize(CHARACTER_SIZE);
 	sfTextStarttext.setColor(sf::Color::Black);
 	sfTextState.setCharacterSize(CHARACTER_SIZE);
@@ -184,14 +174,7 @@ int main()
 	sfTextAuswertung.setPosition(MARGIN_LEFT_QUESTION, MARGIN_TOP_QUESTION + 20 + 60 + 60 + 60 + 60);
 		
 	sfTextStarttext.setString("Drücke Leertaste zum Starten oder zum Neustart");
-	/*
-	sfTextFrage.setString(s);
-	sfTextAntwortA.setString("A  grün");
-	sfTextAntwortB.setString("B  rot");
-	sfTextAntwortC.setString("C  blau");
-	sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
-	*/
-	
+		
 	while (window.isOpen())
 	{
 		if (state == State::START)
@@ -204,66 +187,75 @@ int main()
 		}
 		else if (state == State::HS)
 		{
-			// random zahl zwischn 0 und hsallefragen.size();
-			size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
-			std::cout << rand << "\n";
-			// std::string frage = methode klasse aus vector hsallefragen
-			std::string frage = hsAlleFragen[rand].getFrage();
-			sfTextFrage.setString(frage);
-			// std::vector<Answer> vecAnswer;
-            // alle drei antworten an vecAnswer push_back
-			std::vector<Answer> vecAnswer;
-			vecAnswer.push_back(hsAlleFragen[rand].answerA_);
-			vecAnswer.push_back(hsAlleFragen[rand].answerB_);
-			vecAnswer.push_back(hsAlleFragen[rand].answerC_);
-			// random zahl zwischen 0 und vecAnswer.size()
-			size_t r = getRandomNumberZeroToA(vecAnswer.size());
-			// sfTextAntwortA
-			std::string aA = vecAnswer[r].getAnswer();
-			sfTextAntwortA.setString(aA);
-			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::A
-			if (vecAnswer[r].getIsAnswerRight())
+			if (neueFrage == NeueFrage::JA)
 			{
-				richtigeAntwortIst = RichtigeAntwortIst::A;
-			}
-			// lösche element in Vector vecAnswer
-			vecAnswer.erase(vecAnswer.begin() + r);
-			// random zahl zwischen 0 und vecAnswer.size()
-			r = getRandomNumberZeroToA(vecAnswer.size());
-			// sfTextAnwortB
-			std::string aB = vecAnswer[r].getAnswer();
-			sfTextAntwortB.setString(aB);
-			// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::B
-			if (vecAnswer[r].getIsAnswerRight())
-			{
-				richtigeAntwortIst = RichtigeAntwortIst::B;
-			}
-			// lösche element in Vector vecAnswer
-			vecAnswer.erase(vecAnswer.begin() + r);
-			// letztes Element ist sfTextAntwortC
-			std::string aC = vecAnswer[0].getAnswer();
-			sfTextAntwortC.setString(aC);
-			// richtigeAntwort == RichtigeAntwort::C
-			if (vecAnswer[0].getIsAnswerRight())
-			{
-				richtigeAntwortIst = RichtigeAntwortIst::C;
-			}
-			vecAnswer.erase(vecAnswer.begin());
-			
-			window.clear(sf::Color::White);
-			window.draw(logoSprite);
-			sfTextState.setString("HS");
-			window.draw(sfTextState);
+				//----------------
+				// random zahl zwischn 0 und hsallefragen.size();
+				size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
+				std::cout << rand << "\n";
+				// std::string frage = methode klasse aus vector hsallefragen
+				std::string frage = hsAlleFragen[rand].getFrage();
+				sfTextFrage.setString(frage);
+				// std::vector<Answer> vecAnswer;
+				// alle drei antworten an vecAnswer push_back
+				std::vector<Answer> vecAnswer;
+				vecAnswer.push_back(hsAlleFragen[rand].answerA_);
+				vecAnswer.push_back(hsAlleFragen[rand].answerB_);
+				vecAnswer.push_back(hsAlleFragen[rand].answerC_);
+				// random zahl zwischen 0 und vecAnswer.size()
+				size_t r = getRandomNumberZeroToA(vecAnswer.size());
+				// sfTextAntwortA
+				std::string aA = "A  " +  vecAnswer[r].getAnswer();
+				sfTextAntwortA.setString(aA);
+				// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::A
+				if (vecAnswer[r].getIsAnswerRight())
+				{
+					richtigeAntwortIst = RichtigeAntwortIst::A;
+				}
+				// lösche element in Vector vecAnswer
+				vecAnswer.erase(vecAnswer.begin() + r);
+				// random zahl zwischen 0 und vecAnswer.size()
+				r = getRandomNumberZeroToA(vecAnswer.size());
+				// sfTextAnwortB
+				std::string aB = "B  " + vecAnswer[r].getAnswer();
+				sfTextAntwortB.setString(aB);
+				// Ist das die richtige Antwort dann setze richtigeAntwort == RichtigAntwort::B
+				if (vecAnswer[r].getIsAnswerRight())
+				{
+					richtigeAntwortIst = RichtigeAntwortIst::B;
+				}
+				// lösche element in Vector vecAnswer
+				vecAnswer.erase(vecAnswer.begin() + r);
+				// letztes Element ist sfTextAntwortC
+				std::string aC = "C  " + vecAnswer[0].getAnswer();
+				sfTextAntwortC.setString(aC);
+				// richtigeAntwort == RichtigeAntwort::C
+				if (vecAnswer[0].getIsAnswerRight())
+				{
+					richtigeAntwortIst = RichtigeAntwortIst::C;
+				}
+				vecAnswer.erase(vecAnswer.begin());
 
-			window.draw(sfTextFrage);
-			window.draw(sfTextAntwortA);
-			window.draw(sfTextAntwortB);
-			window.draw(sfTextAntwortC);
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("HS");
+				window.draw(sfTextState);
+
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+
+				window.display();
+				neueFrage = NeueFrage::NEIN;
+			}
+			
 			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
 			{
 				sfTextAuswertung.setColor(sf::Color::Green);
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
+
 				// state = State::FOR;  ??????????
 				// continue; ???????????
 			}
@@ -273,7 +265,8 @@ int main()
 				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
 				window.draw(sfTextAuswertung);
 			}
-			window.display();
+			
+			//window.display();
 		}
 		else if (state == State::FOR)
 		{
