@@ -184,6 +184,7 @@ int main()
 			window.draw(sfTextStarttext);
 			window.display();
 		}
+		// -------------------- HS -----------------------------------------------------
 		else if (state == State::HS && neueFrage == NeueFrage::JA)
 		{
 			size_t rand = getRandomNumberZeroToA(hsAlleFragen.size());
@@ -260,31 +261,243 @@ int main()
 				richtigOderFalsch = RichtigOderFalsch::START;
 				window.display();
 			}
+			
 		}
-		else if (state == State::FOR)
+		// -------------------- FOR -----------------------------------------------------
+		else if (state == State::FOR && neueFrage == NeueFrage::JA)
 		{
+			size_t rand = getRandomNumberZeroToA(forAlleFragen.size());
+			sfTextFrage.setString(forAlleFragen[rand].getFrage());
+			std::vector<Answer> vecAnswer;
+			vecAnswer.push_back(forAlleFragen[rand].answerA_);
+			vecAnswer.push_back(forAlleFragen[rand].answerB_);
+			vecAnswer.push_back(forAlleFragen[rand].answerC_);
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortA.setString("A  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::A;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortB.setString("B  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::B;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			sfTextAntwortC.setString("C  " + vecAnswer[0].getAnswer());
+			if (vecAnswer[0].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::C;
+			}
+			vecAnswer.erase(vecAnswer.begin());
+
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("FOR");
 			window.draw(sfTextState);
+			window.draw(sfTextFrage);
+			window.draw(sfTextAntwortA);
+			window.draw(sfTextAntwortB);
+			window.draw(sfTextAntwortC);
 			window.display();
+			neueFrage = NeueFrage::NEIN;
 		}
-		else if (state == State::FHR)
+		else if (state == State::FOR && neueFrage == NeueFrage::NEIN)
 		{
+			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("FOR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Green);
+				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("FOR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Red);
+				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+		}
+		// -------------------- FHR -----------------------------------------------------
+		else if (state == State::FHR && neueFrage == NeueFrage::JA)
+		{
+			size_t rand = getRandomNumberZeroToA(fhrAlleFragen.size());
+			sfTextFrage.setString(fhrAlleFragen[rand].getFrage());
+			std::vector<Answer> vecAnswer;
+			vecAnswer.push_back(fhrAlleFragen[rand].answerA_);
+			vecAnswer.push_back(fhrAlleFragen[rand].answerB_);
+			vecAnswer.push_back(fhrAlleFragen[rand].answerC_);
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortA.setString("A  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::A;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortB.setString("B  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::B;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			sfTextAntwortC.setString("C  " + vecAnswer[0].getAnswer());
+			if (vecAnswer[0].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::C;
+			}
+			vecAnswer.erase(vecAnswer.begin());
+
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("FHR");
 			window.draw(sfTextState);
+			window.draw(sfTextFrage);
+			window.draw(sfTextAntwortA);
+			window.draw(sfTextAntwortB);
+			window.draw(sfTextAntwortC);
 			window.display();
+			neueFrage = NeueFrage::NEIN;
 		}
-		else if (state == State::AHR)
+		else if (state == State::FHR && neueFrage == NeueFrage::NEIN)
 		{
+			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("FHR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Green);
+				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("FHR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Red);
+				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+		}
+		// -------------------- AHR -----------------------------------------------------
+		else if (state == State::AHR && neueFrage == NeueFrage::JA)
+		{
+			size_t rand = getRandomNumberZeroToA(ahrAlleFragen.size());
+			sfTextFrage.setString(ahrAlleFragen[rand].getFrage());
+			std::vector<Answer> vecAnswer;
+			vecAnswer.push_back(ahrAlleFragen[rand].answerA_);
+			vecAnswer.push_back(ahrAlleFragen[rand].answerB_);
+			vecAnswer.push_back(ahrAlleFragen[rand].answerC_);
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortA.setString("A  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::A;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			rand = getRandomNumberZeroToA(vecAnswer.size());
+			sfTextAntwortB.setString("B  " + vecAnswer[rand].getAnswer());
+			if (vecAnswer[rand].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::B;
+			}
+			vecAnswer.erase(vecAnswer.begin() + rand);
+
+			sfTextAntwortC.setString("C  " + vecAnswer[0].getAnswer());
+			if (vecAnswer[0].getIsAnswerRight())
+			{
+				richtigeAntwortIst = RichtigeAntwortIst::C;
+			}
+			vecAnswer.erase(vecAnswer.begin());
+
 			window.clear(sf::Color::White);
 			window.draw(logoSprite);
 			sfTextState.setString("AHR");
 			window.draw(sfTextState);
+			window.draw(sfTextFrage);
+			window.draw(sfTextAntwortA);
+			window.draw(sfTextAntwortB);
+			window.draw(sfTextAntwortC);
 			window.display();
+			neueFrage = NeueFrage::NEIN;
 		}
+		else if (state == State::AHR && neueFrage == NeueFrage::NEIN)
+		{
+			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("AHR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Green);
+				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
+			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("AHR");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
+				sfTextAuswertung.setColor(sf::Color::Red);
+				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
+				window.draw(sfTextAuswertung);
+				richtigOderFalsch = RichtigOderFalsch::START;
+				window.display();
+			}
+		}
+		// -------------------- ENDE -----------------------------------------------------
 		else if (state == State::ENDE)
 		{			
 			window.clear(sf::Color::White);
@@ -324,14 +537,17 @@ int main()
 						if (state == State::HS)
 						{
 							state = State::FOR;
+							neueFrage = NeueFrage::JA;
 						}
 						else if (state == State::FOR)
 						{
 							state = State::FHR;
+							neueFrage = NeueFrage::JA;
 						}
 						else if (state == State::FHR)
 						{
 							state = State::AHR;
+							neueFrage = NeueFrage::JA;
 						}		
 						else if (state == State::AHR)
 						{
