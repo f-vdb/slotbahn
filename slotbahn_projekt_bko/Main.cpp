@@ -230,6 +230,14 @@ int main()
 		{
 			if (richtigOderFalsch == RichtigOderFalsch::RICHTIG)
 			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("HS");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
 				sfTextAuswertung.setColor(sf::Color::Green);
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
@@ -238,6 +246,14 @@ int main()
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
 			{
+				window.clear(sf::Color::White);
+				window.draw(logoSprite);
+				sfTextState.setString("HS");
+				window.draw(sfTextState);
+				window.draw(sfTextFrage);
+				window.draw(sfTextAntwortA);
+				window.draw(sfTextAntwortB);
+				window.draw(sfTextAntwortC);
 				sfTextAuswertung.setColor(sf::Color::Red);
 				sfTextAuswertung.setString("FALSCH  - Du musst leider warten...");
 				window.draw(sfTextAuswertung);
