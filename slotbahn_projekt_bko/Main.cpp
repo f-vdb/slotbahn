@@ -16,6 +16,12 @@
 #include <stdlib.h>
 #include <SFML/Graphics.hpp>
 
+#include <stdio.h>
+#include <WinSock2.h>
+
+#pragma comment(lib, "ws2_32.lib")  // winsock lib
+
+
 const std::string BKO_LOGO("BKOLogo_80px.png");
 const size_t WIDTH = 1300;                  // Fensterbreite
 const size_t HEIGHT = 750;					// Fensterhoehe
@@ -104,8 +110,47 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 	return true;
 }
 
+/// eckelig....hingerotzt
+#define SERVER "127.0.0.1"
+#define BUFLEN 512
+
+
 int main()
 {
+	char message[] = "hallo";
+	struct sockaddr_in client;
+	WSADATA wsa;
+	int s;
+	int slen = sizeof(client);
+	// Initialisier winsock
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+	{
+		std::cout << "error...\n";
+	}
+	// erstelle socket
+	if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)
+	{
+		std::cout << "konnte socket nicht erstellen..\n";
+	}
+	std::cout << "socket erstellt....\n";
+	// bereite die sockaddr_in struktur vor
+	memset((char *) &client, 0, sizeof(client));
+	client.sin_family = AF_INET;
+	client.sin_port = htons(PORT);
+	client.sin_addr.S_un.S_addr = inet_addr(SERVER);
+
+	if (sendto(s, message, strlen(message), 0, (struct sockaddr *) &client, slen) == SOCKET_ERROR)
+	{
+		std::cout << "konnte daten nicht senden\n";
+
+	}
+	std::cout << "daten gesendet....\n";
+	closesocket(s);
+	WSACleanup();
+
+	
+
+
 	srand(static_cast<unsigned int>(time(0)));
 	State state = State::START;
 	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;

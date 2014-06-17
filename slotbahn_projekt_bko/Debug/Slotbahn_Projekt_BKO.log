@@ -1,14 +1,15 @@
-﻿Der Buildvorgang wurde am 16.06.2014 07:21:35 gestartet.
-     1>Projekt "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
+﻿Der Buildvorgang wurde am 17.06.2014 13:21:05 gestartet.
+     1>Projekt "D:\vdb\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" auf Knoten "2", Build Ziel(e).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML\SFML-2.1\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\Libs\Debug" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 Debug\Main.obj
-         LINK : D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe wurde nicht gefunden oder beim letzten inkrementellen Linkvorgang nicht erstellt; vollständiger Link wird durchgeführt.
-         Slotbahn_Projekt_BKO.vcxproj -> D:\vdb\projects\slotbahn\Debug\Slotbahn_Projekt_BKO.exe
-     1>Die Erstellung des Projekts "D:\vdb\projects\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" ist abgeschlossen, Build Ziel(e).
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\vdb\slotbahn\Debug\Slotbahn_Projekt_BKO.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML\SFML-2.1\Libs\Debug" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\vdb\slotbahn\Debug\Slotbahn_Projekt_BKO.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\vdb\slotbahn\Debug\Slotbahn_Projekt_BKO.lib" /MACHINE:X86 Debug\Main.obj
+     1>Main.obj : error LNK2019: Verweis auf nicht aufgel÷stes externes Symbol ""__declspec(dllimport) public: __thiscall sf::UdpSocket::UdpSocket(void)" (__imp_??0UdpSocket@sf@@QAE@XZ)" in Funktion "_main".
+     1>Main.obj : error LNK2019: Verweis auf nicht aufgel÷stes externes Symbol ""__declspec(dllimport) public: virtual __thiscall sf::UdpSocket::~UdpSocket(void)" (__imp_??1UdpSocket@sf@@UAE@XZ)" in Funktion "_main".
+     1>D:\vdb\slotbahn\Debug\Slotbahn_Projekt_BKO.exe : fatal error LNK1120: 2 nicht aufgel÷ste Externe
+     1>Die Erstellung des Projekts "D:\vdb\slotbahn\Slotbahn_Projekt_BKO\Slotbahn_Projekt_BKO.vcxproj" ist abgeschlossen, Build Ziel(e) -- FEHLER.
 
-Build erfolgreich.
+Fehler beim Buildvorgang.
 
-Verstrichene Zeit 00:00:14.33
+Verstrichene Zeit 00:00:00.90
