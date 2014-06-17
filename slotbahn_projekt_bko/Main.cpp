@@ -1,4 +1,10 @@
-#ifdef SFML_STATIC
+/*
+	Schulprojekt: Slotbahn
+	Programmer:   fvdb
+	License:      Beerware
+*/
+
+#ifdef SFML_STATIC // gibt dem linker an, welche libs gebraucht werden
 #pragma comment(lib, "glew.lib")
 #pragma comment(lib, "freetype.lib")
 #pragma comment(lib, "jpeg.lib")
@@ -18,9 +24,7 @@
 
 #include <stdio.h>
 #include <WinSock2.h>
-
-#pragma comment(lib, "ws2_32.lib")  // winsock lib
-
+#pragma comment(lib, "ws2_32.lib")  // gibt dem linker an, dass ws2_32.lib gebraucht wird
 
 const std::string BKO_LOGO("BKOLogo_80px.png");
 const size_t WIDTH = 1300;                  // Fensterbreite
@@ -35,6 +39,10 @@ const std::string HS_FILENAME("hs.txt");
 const std::string FOR_FILENAME("for.txt");
 const std::string FHR_FILENAME("fhr.txt");
 const std::string AHR_FILENAME("ahr.txt");
+
+const char SERVER[] = "127.0.0.1";
+const int PORT = 54000;
+const int BUFLEN = 512;
 
 class Answer {
 private:
@@ -110,32 +118,26 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 	return true;
 }
 
-/// eckelig....hingerotzt
-#define SERVER "127.0.0.1"
-#define BUFLEN 512
-#define PORT 54000
-
-
-int main()
-{
-	char message[] = "hallo";
+bool sendUDP(const char message[]){
 	struct sockaddr_in client;
 	WSADATA wsa;
-	int s;
+	int s = 0;
 	int slen = sizeof(client);
 	// Initialisier winsock
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 	{
 		std::cout << "error...\n";
+		return false;
 	}
 	// erstelle socket
 	if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)
 	{
 		std::cout << "konnte socket nicht erstellen..\n";
+		return false;
 	}
 	std::cout << "socket erstellt....\n";
 	// bereite die sockaddr_in struktur vor
-	memset((char *) &client, 0, sizeof(client));
+	memset((char *)&client, 0, sizeof(client));
 	client.sin_family = AF_INET;
 	client.sin_port = htons(PORT);
 	client.sin_addr.S_un.S_addr = inet_addr(SERVER);
@@ -143,15 +145,18 @@ int main()
 	if (sendto(s, message, strlen(message), 0, (struct sockaddr *) &client, slen) == SOCKET_ERROR)
 	{
 		std::cout << "konnte daten nicht senden\n";
-
+		return false;
 	}
 	std::cout << "daten gesendet....\n";
 	closesocket(s);
 	WSACleanup();
+	return true;
+}
 
+
+int main()
+{
 	
-
-
 	srand(static_cast<unsigned int>(time(0)));
 	State state = State::START;
 	RichtigOderFalsch richtigOderFalsch = RichtigOderFalsch::START;
@@ -289,6 +294,10 @@ int main()
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
 				richtigOderFalsch = RichtigOderFalsch::START;
+				if (!sendUDP("strom"))
+				{
+					std::cout << "konnte udp-paket icht senden...\n";
+				}
 				window.display();
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
@@ -368,6 +377,10 @@ int main()
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
 				richtigOderFalsch = RichtigOderFalsch::START;
+				if (!sendUDP("strom"))
+				{
+					std::cout << "konnte udp-paket icht senden...\n";
+				}
 				window.display();
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
@@ -446,6 +459,10 @@ int main()
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
 				richtigOderFalsch = RichtigOderFalsch::START;
+				if (!sendUDP("strom"))
+				{
+					std::cout << "konnte udp-paket icht senden...\n";
+				}
 				window.display();
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
@@ -524,6 +541,10 @@ int main()
 				sfTextAuswertung.setString("RICHTIG  - Lass es krachen...");
 				window.draw(sfTextAuswertung);
 				richtigOderFalsch = RichtigOderFalsch::START;
+				if (!sendUDP("strom"))
+				{
+					std::cout << "konnte udp-paket icht senden...\n";
+				}
 				window.display();
 			}
 			else if (richtigOderFalsch == RichtigOderFalsch::FALSCH)
