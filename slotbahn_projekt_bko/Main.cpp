@@ -113,6 +113,7 @@ bool leseDateiInVector(const std::string& filename, std::vector<Frage>& vec)
 /// eckelig....hingerotzt
 #define SERVER "127.0.0.1"
 #define BUFLEN 512
+#define PORT 54000
 
 
 int main()
