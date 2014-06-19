@@ -40,7 +40,7 @@ const std::string FOR_FILENAME("for.txt");
 const std::string FHR_FILENAME("fhr.txt");
 const std::string AHR_FILENAME("ahr.txt");
 
-const char SERVER[] = "127.0.0.1";
+const char SERVER[] = "192.168.0.140";
 const int PORT = 54000;
 const int BUFLEN = 512;
 

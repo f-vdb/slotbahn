@@ -1,16 +1,4 @@
-/*
-  UDPSendReceive.pde:
- This sketch receives UDP message strings, prints them to the serial port
- and sends an "acknowledge" string back to the sender
- 
- A Processing sketch is included at the end of file that can be used to send 
- and received messages for testing with a computer.
- 
- created 21 Aug 2010
- by Michael Margolis
- 
- This code is in the public domain.
- */
+
  
  /*
  int led = 7;  // pin 7
@@ -37,16 +25,16 @@ void loop() {
 // The IP address will be dependent on your local network:
 byte mac[] = {  
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress ip(192, 168, 1, 177);
+IPAddress ip(192, 168, 0, 140);
 
-unsigned int localPort = 8888;      // local port to listen on
+unsigned int localPort = 54000;      // local port to listen on
 
 // buffers for receiving and sending data
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
 char  ReplyBuffer[] = "acknowledged";       // a string to send back
 
 
-char testA[]="richtig";
+char testA[]="strom";
 
 // An EthernetUDP instance to let us send and receive packets over UDP
 EthernetUDP Udp;
